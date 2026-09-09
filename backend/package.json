@@ -1,15 +1,29 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
+  "name": "nitam-backend",
+  "version": "1.0.1",
+  "description": "Full-stack e-commerce backend with authentication, payment processing, and file management",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "fullstack",
+    "ecommerce",
+    "express",
+    "mongodb",
+    "payment",
+    "authentication"
+  ],
+  "author": "aryan95080",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.1",
