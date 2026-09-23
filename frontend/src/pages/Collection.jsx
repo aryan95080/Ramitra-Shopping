@@ -3,7 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
-import { assets } from "../assets/assets";
+
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext);
@@ -92,7 +92,7 @@ const Collection = () => {
   }
 
   return (
-    <div className="w-[95%] mx-auto flex flex-col sm:flex-row  sm:gap-10 pt-5 border-t-5 ">
+    <div className="w-[95%] mx-auto flex flex-col sm:flex-row  sm:gap-10 pt-5 ">
       {/*Filter Option  */}
       <div className="min-w-50 bg-transparent shadow-lg shadow-gray-400 backdrop-blur-lg rounded px-2 max-h-screen sticky top-15 z-1 ">
         <div onClick={() => setShowFilter(!showFilter)} className=" flex items-center bg-transparent-400 rounded shadow-lg backdrop-blur-lg px-2 py-1 my-3">

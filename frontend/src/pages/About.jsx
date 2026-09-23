@@ -6,7 +6,7 @@ import {assets} from '../assets/assets'
 const About=()=> {
   return (
     <div className='w-[95%] mx-auto'>
-      <div className='text-2xl text-center pt-8 border-t'>
+      <div className='text-2xl text-center pt-8 '>
         <Title text1={' ABOUT '} text2={' US '}/>
       </div>
       <div className='my-10 flex flex-col md:flex-row gap-16'>
@@ -29,15 +29,15 @@ const About=()=> {
       <div className='flex flex-col md:flex-row bg-transparent shadow-xl backdrop-blur-md gap-5 p-5 rounded'>
         <div className='flex flex-col  px-10 md:px-16 py-8 sm:py-20 gap-5 bg-transparent shadow-lg shadow-gray-400 rounded'>
             <b className='text-xl'>Quality Assurance : </b>
-            <p className='text-gray-600'>At <b>NITAMITRA</b>, we are committed to delivering the highest quality products to our customers. Our dedicated Quality Assurance team meticulously inspects each item to ensure it meets our standards of durability, functionality, and design. We believe in providing you with products you can trust, ensuring a seamless and satisfying shopping experience every time.</p>
+            <p className='text-gray-600'>At <b>RAMITRA</b>, we are committed to delivering the highest quality products to our customers. Our dedicated Quality Assurance team meticulously inspects each item to ensure it meets our standards of durability, functionality, and design. We believe in providing you with products you can trust, ensuring a seamless and satisfying shopping experience every time.</p>
         </div>
         <div className='flex flex-col bg-transparent shadow-lg shadow-gray-400 rounded px-10 md:px-16 py-8 sm:py-20 gap-5 '>
             <b className='text-xl'>Convenience : </b>
-            <p className='text-gray-600'>Shopping made simple! At <b>NITAMITRA</b>, we prioritize your convenience by offering a user-friendly interface, seamless navigation, and secure payment options. Enjoy fast checkout, easy returns, and reliable customer support — because your time and comfort matter to us.</p>
+            <p className='text-gray-600'>Shopping made simple! At <b>RAMITRA</b>, we prioritize your convenience by offering a user-friendly interface, seamless navigation, and secure payment options. Enjoy fast checkout, easy returns, and reliable customer support — because your time and comfort matter to us.</p>
         </div>
         <div className='flex flex-col px-10 md:px-16 py-8 sm:py-20 gap-5 bg-transparent shadow-lg shadow-gray-400 rounded'>
             <b className='text-xl'>Exceptional Customer Service : </b>
-            <p className='text-gray-600'>At <b>NITAMITRA</b>, we are committed to delivering exceptional customer service. Our dedicated support team is always ready to assist you with queries, concerns, or guidance to ensure your shopping experience is smooth, satisfying, and memorable.</p>
+            <p className='text-gray-600'>At <b>RAMITRA</b>, we are committed to delivering exceptional customer service. Our dedicated support team is always ready to assist you with queries, concerns, or guidance to ensure your shopping experience is smooth, satisfying, and memorable.</p>
         </div>
       </div>
       <NewsletterBox/>

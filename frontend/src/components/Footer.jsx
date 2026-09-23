@@ -18,14 +18,14 @@ const Footer=()=> {
       
       <div className='col-span-3'>
         <div className="flex items-center justify-center p-4">
-          <img src={assets.logo} className="w-20 h-auto inline-flex" alt="Nitamitra Logo" />
-          <p className="font-extrabold text-4xl sm:text-5xl md:text-6xl ml-2 text-green-400">nitamitra shopping</p>
+          <img src={assets.logo} className="w-20 h-auto inline-flex" alt="Ramitra Logo" />
+          <p className="font-extrabold text-4xl sm:text-5xl md:text-6xl ml-2 text-green-400">RAMITRA SHOPPING</p>
         </div>
-          <p className='text-gray-700 text-justify w-full'>**Nitamitra Shopping** is your go-to destination for all things stylish, trendy, and affordable! At Nitamitra, we bring together a curated selection of high-quality fashion, accessories, home essentials, and lifestyle products designed to elevate your everyday experience. Whether you're looking for the latest in fashion, unique decor pieces, or practical gadgets, Nitamitra has something for everyone.  
+          <p className='text-gray-700 text-justify w-full'>Ramitra Shopping is your go-to destination for all things stylish, trendy, and affordable! At Ramitra, we bring together a curated selection of high-quality fashion, accessories, home essentials, and lifestyle products designed to elevate your everyday experience. Whether you're looking for the latest in fashion, unique decor pieces, or practical gadgets, Ramitra has something for everyone.  
 
           Our store focuses on offering a seamless shopping experience with a diverse range of products that cater to all tastes and needs. We believe that shopping should be both fun and convenient, which is why we pride ourselves on exceptional customer service, hassle-free returns, and fast delivery.
 
-          Discover the perfect blend of style and comfort at Nitamitra Shopping — where quality meets affordability! Shop with us today and transform your lifestyle, one product at a time.</p>
+          Discover the perfect blend of style and comfort at Ramitra Shopping — where quality meets affordability! Shop with us today and transform your lifestyle, one product at a time.</p>
       </div>
 
       <div>
@@ -35,7 +35,7 @@ const Footer=()=> {
           <li>About Us</li>
           <li>Delivery</li>
           <li>Careers</li>
-          <li>Nitamitra Stories</li>
+          <li>Ramitra Stories</li>
         </ul>
       </div>
 
@@ -89,7 +89,7 @@ const Footer=()=> {
       </div> 
       <div  className='col-span-3'>
         <hr/>
-        <p className='text-center'>Copyright 2025@ nitamitra.com-All Right Reserved.</p>
+        <p className='text-center'>Copyright 2025@ ramitra.com-All Right Reserved.</p>
       </div>     
     </div>  
     

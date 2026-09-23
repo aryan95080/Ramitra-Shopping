@@ -1,70 +1,162 @@
-import React, { useContext } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { assets } from '../assets/assets'
-import { useState } from 'react'
-import { ShopContext } from '../context/ShopContext';
-import { IoSearchSharp } from "react-icons/io5";
+import React, { useContext, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { assets } from "../assets/assets";
+import { ShopContext } from "../context/ShopContext";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
-  const [visible,setVisible]=useState(false);
-  const {setShowSearch,getCartCount,navigate,token,setToken,setCartItems}=useContext(ShopContext);
-  
-  const logout=()=>{
-    navigate('/login')
-    localStorage.removeItem('token')
-    setToken('')
-    setCartItems({})
-    
-  }
-  return (
-    <div className='z-100 bg-white shadow-lg backdrop-blur-sm flex items-center justify-between py-1 px-5 text-[#2b2b2b]  w-[95%]  mx-auto  font-medium sticky top-0  rounded-sm transition-all duration-300'>
-    <Link to="/" ><img className='w-13 cursor-pointer py-2 px-2 rounded' src={assets.logo} alt=""  /> </Link>
-    <ul className=' sm:flex hidden rounded items-center gap-5 '>
-      <NavLink className='hover:text-green-500  px-2 py-1 rounded items-center gap-1 flex flex-col' to='/'><p>HOME</p><hr className='hidden w-2/4 border-none h-[1.5px] bg-white' /></NavLink>
-      <NavLink className='hover:text-green-500 hover:bg-white  px-2 py-1 rounded items-center gap-1 flex flex-col' to='/collection'><p>COLLECTION</p><hr className='hidden w-2/4 border-none h-[1.5px] bg-white' /></NavLink>
-      <NavLink className='hover:text-green-500 hover:bg-white px-2 py-1 rounded items-center gap-1 flex flex-col' to='/about'><p>ABOUT</p><hr className='hidden w-2/4 border-none h-[1.5px] bg-white' /></NavLink>
-      <NavLink className='hover:text-green-500 hover:bg-white px-2 py-1 rounded items-center gap-1 flex flex-col' to='/contact'><p>CONTACT</p><hr className='w-2/4 border-none h-[1.5px] hidden bg-white' /></NavLink>
-    </ul>
-    <div className='flex items-center gap-6'>
-    <img values='search' onClick={()=>setShowSearch(true)} className='w-5 min-w-5 cursor-pointer'  src={assets.search_icon} alt="" />
-        <div className='group relative'>
-      
-        <img onClick={()=>token?null:navigate('/login')} className='w-5 rounded-full cursor-pointer min-w-5' src={assets.profile_icon} alt="" />
-        {/*Dropdown menu */}
-        {
-          token&&<div className='group-hover:block hidden absolute dropdown-menu bg-green-500 text-white right-0 pt-4'>
-          <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-200 text-black'>
-            <p className='cursor-pointer hover-text-green'>My Profile</p>
-            <p onClick={()=>navigate('/orders')} className='cursor-pointer hover-text-green'>Order</p>
-            <p onClick={logout} className='cursor-pointer hover-text-green'>Logout</p>
-          </div>
-        </div>
-        }
-      </div>
-      <Link to='/cart' className='relative'>
-      <img className='w-5 min-w-5 cursor-pointer' src={assets.cart_icon} alt="" />
-      <p className='absolute  bg-green-500 right-[-5px] bottom-[-5px] w-4 text-center rounded-full leading-4 text-[8px] text-white'>{getCartCount()}</p>
-      </Link>
-      <img onClick={()=>setVisible(true)} src={assets.menu_icon} className='w-5 sm:hidden cursor-pointer' alt="" />
-    </div>
+  const [visible, setVisible] = useState(false);
 
-    {/*Sidebar menu for small screen */}
-    
-    <div className={`absolute top-0 right-0  bg-green-500 overflow-hidden transition-all ${visible?'w-full':'w-0'}`}>
-      <div className='flex flex-col   bg-green-300 w-full ' >
-        <div onClick={()=>setVisible(false)} className='flex items-center  bg-white text-green-400  gap-4 p-3 cursor-pointer'>
-          <img  className='h-4 ' src={assets.back} alt="" />
-          <p>Back</p>
+  const {
+    getCartCount,
+    navigate,
+    token,
+    setToken,
+    setCartItems,
+  } = useContext(ShopContext);
+
+  const logout = () => {
+    navigate("/login");
+    localStorage.removeItem("token");
+    setToken("");
+    setCartItems({});
+  };
+
+  return (
+    <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-md">
+      <div className="flex items-center justify-between max-w-7xl mx-auto px-5 md:px-10 py-2">
+
+        {/* Logo */}
+        <Link to="/">
+          <div className="flex items-center gap-1">
+            <img
+            className="w-12 md:h-12 cursor-pointer hover:scale-105 transition rounded-full"
+            src={assets.logo}
+            alt="logo"
+          />
+          <p className="hidden sm:block text-2xl font-bold text-green-500">Ramitra</p>
+          </div>
+        </Link>
+
+        {/* Desktop Menu */}
+        <ul className="hidden sm:flex items-center gap-8 text-sm md:text-base font-semibold">
+          {[
+            { path: "/", name: "HOME" },
+            { path: "/collection", name: "COLLECTION" },
+            { path: "/about", name: "ABOUT" },
+            { path: "/contact", name: "CONTACT" },
+          ].map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              className={({ isActive }) =>
+                `relative group ${
+                  isActive ? "text-green-500" : "text-gray-700"
+                }`
+              }
+            >
+              <p className="hover:text-green-500 transition">
+                {item.name}
+              </p>
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-green-500 transition-all group-hover:w-full"></span>
+            </NavLink>
+          ))}
+        </ul>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-5 md:gap-6">
+
+          {/* Profile Dropdown */}
+          <div className="relative group">
+            <img
+              onClick={() => (token ? null : navigate("/login"))}
+              className="w-6 cursor-pointer rounded-full"
+              src={assets.profile_icon}
+              alt="profile"
+            />
+
+            {/* FIXED DROPDOWN */}
+            {token && (
+              <div className="absolute right-0 top-full mt-1 w-40 bg-white shadow-lg rounded-lg border overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                
+                <p className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/profile")}>
+                  My Profile
+                </p>
+
+                <p
+                  onClick={() => navigate("/orders")}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  Orders
+                </p>
+
+                <p
+                  onClick={logout}
+                  className="px-4 py-2 hover:bg-red-100 text-red-500 cursor-pointer"
+                >
+                  Logout
+                </p>
+
+              </div>
+            )}
+          </div>
+
+
+
+          {/* Cart */}
+          <Link to="/cart" className="relative">
+            <img
+              className="w-6 cursor-pointer"
+              src={assets.cart_icon}
+              alt="cart"
+            />
+            <span className="absolute -right-2 -bottom-2 bg-green-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+              {getCartCount() > 99 ? "99+" : getCartCount()}
+            </span>
+          </Link>
+
+          {/* Mobile Menu Icon */}
+          <img
+            onClick={() => setVisible(true)}
+            src={assets.menu_icon}
+            className="w-6 sm:hidden cursor-pointer"
+            alt="menu"
+          />
         </div>
-        <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border hover:bg-green-400' to='/'>HOME</NavLink>
-        <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border hover:bg-green-400' to='/collection'>COLLECTION</NavLink>
-        <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border hover:bg-green-400' to='/about'>ABOUT</NavLink>
-        <NavLink onClick={()=>setVisible(false)}  className='py-2 pl-6 border hover:bg-green-400' to='/contact'>CONTACT</NavLink>
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform duration-300 ${
+          visible ? "translate-x-0" : "translate-x-full"
+        } w-3/4 sm:hidden`}
+      >
+        <div className="flex flex-col p-5 gap-5 text-lg font-medium">
+
+          {/* Close */}
+          <div
+            onClick={() => setVisible(false)}
+            className="cursor-pointer text-green-500 font-semibold"
+          >
+            ← Back
+          </div>
+
+          <NavLink onClick={() => setVisible(false)} to="/">
+            HOME
+          </NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/collection">
+            COLLECTION
+          </NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/about">
+            ABOUT
+          </NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/contact">
+            CONTACT
+          </NavLink>
+        </div>
       </div>
     </div>
-    
-    </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -17,6 +17,7 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const [token, setToken] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -65,11 +66,14 @@ const ShopContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             totalCount += cartItems[items][item];
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     return totalCount;
   };
+
   const updateQuantity = async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
     cartData[itemId][size] = quantity;
@@ -97,7 +101,9 @@ const ShopContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             totalAmount += itemInfo.price * cartItems[items][item];
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     return totalAmount;
@@ -134,15 +140,36 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  const getUserProfile = async () => {
+    try {
+      const response = await axios.post(
+        backendUrl + "/api/user/profile",
+        {},
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        setUser(response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getProductData();
-  }, []);
-  useEffect(() => {
-    if (!token && localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
-      getUserCart(localStorage.getItem("token"));
     }
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      getUserCart(token);
+      getUserProfile();
+    }
+  }, [token]);
 
   const value = {
     products,
@@ -162,6 +189,8 @@ const ShopContextProvider = (props) => {
     backendUrl,
     token,
     setToken,
+    user,
+    setUser,
   };
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
