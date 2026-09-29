@@ -36,111 +36,386 @@ const Product = () => {
   }
 
   return productData ? (
-    <div className='border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 w-[95%] mx-auto'>
+    <div className='pt-10 transition-opacity ease-in duration-500 opacity-100 w-[95%] mx-auto'>
       {/* ---------------product data  ---------------*/}
-      <div className='flex gap-6 sm:gap-12 flex-col sm:flex-row'>
-        {/*---------------product image--------------- */}
-        <div className='flex-1 flex flex-col-reverse gap-3 sm:flex-row'>
+      <div className='flex gap-8 lg:gap-14 flex-col sm:flex-row'>
 
-          <div className='flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-start sm:justify-normal gap-2 sm:gap-0 sm:w-[18.7%] w-full'>
-            {
-              productData.image.map((item, index) => (
-                <img
-                  onClick={() => setImage(item)}
-                  src={item}
-                  key={index}
-                  className={`w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer border-2 ${item === image ? 'border-green-400' : 'border-transparent'}`}
-                  alt={`${productData.name} view ${index + 1}`}
-                />
-              ))
+  {/*--------------- PRODUCT IMAGE ---------------*/}
+  <div className='flex-1 flex flex-col-reverse gap-3 sm:flex-row'>
+
+    {/* Product Thumbnails */}
+    <div className='
+      flex
+      sm:flex-col
+      overflow-x-auto
+      sm:overflow-y-auto
+      justify-start
+      gap-2
+      sm:gap-3
+      sm:w-[18%]
+      w-full
+      scrollbar-hide
+    '>
+      {productData.image.map((item, index) => (
+        <button
+          type='button'
+          onClick={() => setImage(item)}
+          key={index}
+          className={`
+            w-[23%]
+            sm:w-full
+            aspect-[4/5]
+            flex-shrink-0
+            overflow-hidden
+            border
+            bg-gray-50
+            transition-all
+            duration-200
+            ${
+              item === image
+                ? 'border-green-400'
+                : 'border-gray-200 hover:border-gray-400'
             }
-          </div>
-          <div className='w-full sm:w-[80%]'>
-            <img src={image} className='w-full h-auto rounded' alt={productData.name} />
-          </div>
-        </div>
+          `}
+        >
+          <img
+            src={item}
+            alt={`${productData.name} view ${index + 1}`}
+            className='
+              w-full
+              h-full
+              object-cover
+              transition-transform
+              duration-300
+              hover:scale-105
+            '
+          />
+        </button>
+      ))}
+    </div>
 
-        {/*---------------product details--------------- */}
-        <div className='flex-1'>
-          <h1 className='font-medium text-xl sm:text-2xl mt-2'>{productData.name}</h1>
-          <div className='flex items-center gap-1 mt-2'>
-            <IoStar style={{ color: 'orange', stroke: 'black', strokeWidth: '20px' }} />
-            <IoStar style={{ color: 'orange', stroke: 'black', strokeWidth: '20px' }} />
-            <IoStar style={{ color: 'orange', stroke: 'black', strokeWidth: '20px' }} />
-            <IoStar style={{ color: 'orange', stroke: 'black', strokeWidth: '20px' }} />
-            <IoStar style={{ color: 'white', stroke: 'black', strokeWidth: '20px' }} />
-            <p className='pl-2'>(200)</p>
-          </div>
-          <p className='mt-5 text-2xl sm:text-3xl font-medium flex items-center'>
-            <FaRupeeSign style={{ fontSize: '22px' }} />
-            {productData.price}
-          </p>
-          <p className='mt-5 text-gray-500 md:w-4/5 text-sm sm:text-base'>{productData.description}</p>
+    {/* Main Product Image */}
+    <div className='
+      w-full
+      sm:w-[80%]
+      bg-gray-50
+      overflow-hidden
+      relative
+    '>
+      <img
+        src={image}
+        className='
+          w-full
+          aspect-[4/5]
+          object-cover
+          transition-transform
+          duration-500
+          hover:scale-[1.02]
+        '
+        alt={productData.name}
+      />
+    </div>
 
-          <div className='flex flex-col gap-4 sm:gap-8 my-8'>
-            <p>Select Size</p>
-            <div className='flex gap-2 flex-wrap'>
-              {
-                productData.sizes.map((item, index) => (
-                  <button
-                    onClick={() => { setSize(item); setSizeError(false); }}
-                    className={`bg-amber-400 rounded px-3 py-2 text-center border-2 ${item === size ? 'border-orange-600' : 'border-transparent'}`}
-                    key={index}
-                  >
-                    {item}
-                  </button>
-                ))
+  </div>
+
+
+  {/*--------------- PRODUCT DETAILS ---------------*/}
+  <div className='flex-1'>
+
+    {/* Product Name */}
+    <h1 className='
+      font-medium
+      text-xl
+      sm:text-2xl
+      lg:text-3xl
+      text-gray-900
+      mt-1
+      leading-tight
+    '>
+      {productData.name}
+    </h1>
+
+
+    {/* Rating */}
+    <div className='flex items-center gap-1 mt-4'>
+
+      <div className='flex items-center gap-0.5'>
+        <IoStar className='text-yellow-500' />
+        <IoStar className='text-yellow-500' />
+        <IoStar className='text-yellow-500' />
+        <IoStar className='text-yellow-500' />
+        <IoStar className='text-gray-200' />
+      </div>
+
+      <p className='text-sm text-gray-500 ml-2'>
+        (200 Reviews)
+      </p>
+
+    </div>
+
+
+    {/* Price */}
+    <div className='mt-5 flex items-center'>
+
+      <FaRupeeSign
+        className='text-gray-900'
+        size={18}
+      />
+
+      <p className='text-2xl sm:text-3xl font-semibold text-gray-900'>
+        {productData.price}
+      </p>
+
+    </div>
+
+    <p className='text-xs text-gray-400 mt-1'>
+      Inclusive of all taxes
+    </p>
+
+
+    {/* Description */}
+    <p className='
+      mt-6
+      text-gray-600
+      md:w-4/5
+      text-sm
+      sm:text-base
+      leading-6
+    '>
+      {productData.description}
+    </p>
+
+
+    {/* Divider */}
+    <hr className='mt-7 border-gray-200 md:w-4/5' />
+
+
+    {/* Size Selection */}
+    <div className='flex flex-col gap-4 my-7'>
+
+      <div className='flex items-center justify-between md:w-4/5'>
+        <p className='text-sm font-semibold text-gray-900'>
+          Select Size
+        </p>
+
+        <span className='text-xs text-gray-400'>
+          Choose your size
+        </span>
+      </div>
+
+
+      <div className='flex gap-2 flex-wrap'>
+
+        {productData.sizes.map((item, index) => (
+          <button
+            type='button'
+            onClick={() => {
+              setSize(item);
+              setSizeError(false);
+            }}
+            className={`
+              min-w-[55px]
+              px-4
+              py-2.5
+              text-sm
+              border
+              transition-all
+              duration-200
+              ${
+                item === size
+                  ? 'bg-green-400 text-white border-green-400'
+                  : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
               }
-            </div>
-            {sizeError && (
-              <p className='text-red-500 text-sm'>Please select a size before adding to cart.</p>
-            )}
-          </div>
-
-          <button
-            onClick={handleAddToCart}
-            className='bg-green-400 text-white rounded px-8 py-3 text-sm active:bg-black w-full sm:w-auto'
+            `}
+            key={index}
           >
-            Add Cart
+            {item}
           </button>
+        ))}
 
-          <hr className='mt-8 sm:w-4/5' />
-          <div className='text-sm text-gray-400 mt-5 flex flex-col gap-1'>
-            <p>100% Original products.</p>
-            <p>Cash on delivery available on this product</p>
-            <p>Easy return and exchange policy within 7 days.</p>
-          </div>
-        </div>
       </div>
 
-      {/* -------------Description & Review Section-------------*/}
-      <div className='mt-20'>
-        <div className='flex'>
-          <button
-            onClick={() => setActiveTab('description')}
-            className={`border px-3 sm:px-5 py-3 text-xs sm:text-sm ${activeTab === 'description' ? 'font-bold bg-gray-50' : 'text-gray-500'}`}
-          >
-            Description
-          </button>
-          <button
-            onClick={() => setActiveTab('reviews')}
-            className={`border px-3 sm:px-5 py-3 text-xs sm:text-sm ${activeTab === 'reviews' ? 'font-bold bg-gray-50' : 'text-gray-500'}`}
-          >
-            Reviews (575)
-          </button>
-        </div>
 
-        {activeTab === 'description' ? (
-          <div className='flex flex-col gap-4 border p-4 sm:p-6 text-sm text-gray-400'>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi magni adipisci repudiandae vel! Cum, a molestias. Perspiciatis molestiae tenetur, magni, distinctio quia laudantium qui facere cum minima sapiente doloribus suscipit debitis sed aspernatur nulla hic. Esse vel dolorum aperiam nam facilis iste, assumenda repellat sapiente rerum facere eligendi hic omnis?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque inventore culpa ab iste beatae officiis assumenda, officia vero fugit nemo!</p>
-          </div>
-        ) : (
-          <div className='flex flex-col gap-4 border p-4 sm:p-6 text-sm text-gray-400'>
-            <p>Reviews coming soon.</p>
-          </div>
-        )}
-      </div>
+      {sizeError && (
+        <p className='text-red-500 text-xs'>
+          Please select a size before adding to cart.
+        </p>
+      )}
+
+    </div>
+
+
+    {/* Add To Cart */}
+    <button
+      onClick={handleAddToCart}
+      className='
+        bg-green-400
+        hover:bg-green-500
+        text-white
+        px-8
+        py-3.5
+        text-sm
+        font-semibold
+        uppercase
+        tracking-wide
+        transition-all
+        duration-300
+        active:scale-[0.98]
+        w-full
+        sm:w-auto
+        md:min-w-[220px]
+      '
+    >
+      Add to Cart
+    </button>
+
+
+    {/* Product Policies */}
+    <hr className='mt-8 md:w-4/5 border-gray-200' />
+
+    <div className='
+      text-xs
+      sm:text-sm
+      text-gray-500
+      mt-5
+      flex
+      flex-col
+      gap-2
+    '>
+
+      <p>
+        <span className='text-gray-800 font-medium'>
+          ✓
+        </span>{" "}
+        100% Original products.
+      </p>
+
+      <p>
+        <span className='text-gray-800 font-medium'>
+          ✓
+        </span>{" "}
+        Cash on delivery available on this product.
+      </p>
+
+      <p>
+        <span className='text-gray-800 font-medium'>
+          ✓
+        </span>{" "}
+        Easy return and exchange policy within 7 days.
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+
+{/* =====================================================
+    DESCRIPTION & REVIEW SECTION
+===================================================== */}
+
+<div className='mt-16 sm:mt-20'>
+
+  {/* Tabs */}
+  <div className='flex border-b border-gray-200'>
+
+    <button
+      onClick={() => setActiveTab('description')}
+      className={`
+        px-4
+        sm:px-6
+        py-3
+        text-xs
+        sm:text-sm
+        font-medium
+        border-b-2
+        transition-all
+        duration-200
+        ${
+          activeTab === 'description'
+            ? 'border-green-400 text-gray-900'
+            : 'border-transparent text-gray-500 hover:text-gray-900'
+        }
+      `}
+    >
+      Description
+    </button>
+
+    <button
+      onClick={() => setActiveTab('reviews')}
+      className={`
+        px-4
+        sm:px-6
+        py-3
+        text-xs
+        sm:text-sm
+        font-medium
+        border-b-2
+        transition-all
+        duration-200
+        ${
+          activeTab === 'reviews'
+            ? 'border-green-400 text-gray-900'
+            : 'border-transparent text-gray-500 hover:text-gray-900'
+        }
+      `}
+    >
+      Reviews (575)
+    </button>
+
+  </div>
+
+
+  {/* Tab Content */}
+  {activeTab === 'description' ? (
+
+    <div className='
+      border
+      border-t-0
+      border-gray-200
+      p-5
+      sm:p-7
+      text-sm
+      text-gray-600
+      leading-7
+    '>
+
+      <p>
+        Ramitra is a modern fashion destination created for those
+        who believe that style is more than what you wear—it’s how
+        you express yourself. We bring together contemporary
+        fashion, timeless designs, and everyday comfort to create
+        clothing that fits effortlessly into every lifestyle.
+        From men’s and women’s fashion to kidswear, Ramitra offers
+        thoughtfully selected styles ranging from casual essentials
+        and trendy tops to seasonal outerwear and everyday wardrobe
+        staples. Our goal is simple: quality styles, effortless
+        comfort, and fashion that feels uniquely yours.
+      </p>
+
+    </div>
+
+  ) : (
+
+    <div className='
+      border
+      border-t-0
+      border-gray-200
+      p-5
+      sm:p-7
+      text-sm
+      text-gray-400
+    '>
+
+      <p>
+        Reviews coming soon.
+      </p>
+
+    </div>
+
+  )}
+
+</div>
 
       {/* -------------Related Products Section-------------*/}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} />

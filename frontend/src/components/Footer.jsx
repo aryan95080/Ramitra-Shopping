@@ -53,7 +53,7 @@ const Footer=()=> {
       <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
         <ul className='flex flex-col gap-1 text-gray-700'>
         <BsFillTelephoneInboundFill /><li> +91-913-569-7852</li>
-        <MdMarkEmailRead /><li>contact@nitamit.com</li>
+        <MdMarkEmailRead /><li>contact@ramitra.com</li>
         </ul>
         <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
         <ul className='flex gap-5'>

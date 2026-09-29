@@ -26,7 +26,6 @@ const App = () => {
       {token === "" ?<Login set setToken={setToken} />:
         <>
           <Navbar setToken={setToken} />
-          <hr />
           <div className="w-full flex">
             <Sidebar />
             <div className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base">

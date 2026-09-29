@@ -12,6 +12,7 @@ import Product from './pages/Product';
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
+import ScrollToTop from './components/ScrollTop'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from "./pages/Profile";
@@ -24,6 +25,7 @@ function App() {
       <ToastContainer className='mr-[2%]'/>
       <Navbar/>
       <SearchBar/>
+      <ScrollToTop/>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/about' element={<About />} />

@@ -7,12 +7,13 @@ const NewsletterBox = () => {
 
   return (
     <div className='text-center mt-10 px-4'>
+      <p className='text-gray-500 text-sm sm:text-base max-w-md mx-auto mt-2'>
+        Get the latest fashion updates, exclusive offers, and early access to new collections delivered straight to your inbox.
+      </p>
       <p className='text-xl sm:text-2xl font-medium text-gray-700'>
         Subscribe Now and Get 20% Off
       </p>
-      <p className='text-gray-500 text-sm sm:text-base max-w-md mx-auto mt-2'>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam sequi a maxime qui mollitia error animi molestias perferendis reprehenderit corporis.
-      </p>
+      
 
       <form
         onSubmit={onSubmitHandler}
@@ -31,6 +32,9 @@ const NewsletterBox = () => {
           Subscribe
         </button>
       </form>
+      <p className='text-gray-500 text-sm sm:text-base max-w-md mx-auto mt-2'>
+        By subscribing, you agree to receive emails from Ramitra. You can unsubscribe at any time.
+      </p>
     </div>
   )
 }
