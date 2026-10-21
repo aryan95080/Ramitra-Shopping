@@ -9,7 +9,7 @@
  
  ✅ Authentication & Security: JWT, bcrypt – to safeguard user data
  
- ✅ Payments Integration: PayPal – enabling hassle-free transactions
+ ✅ Payments Integration: Razorpay – enabling secure online transactions
  
  ✅ File Uploads: Multer, Cloudinary API – for smooth product image handling
  
@@ -26,7 +26,7 @@
 💡 What Makes FashionKing Stand Out?
  🔹 A fully functional cart system where users can add, edit, and remove items
  🔹 Admin dashboard for managing products, users, and orders
- 🔹 Secure checkout with PayPal integration
+ 🔹 Checkout with Razorpay and Cash on Delivery integration
  🔹 Cloud-based storage for optimized media handling
  🔹 Responsive & user-friendly design for an immersive shopping experience
 📌 Deployed on Vercel for smooth performance and accessibility.

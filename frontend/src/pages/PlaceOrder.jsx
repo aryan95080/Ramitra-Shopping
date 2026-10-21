@@ -29,8 +29,57 @@ const PlaceOrder = () => {
     setFormData(data => ({ ...data, [name]: value }))
   }
 
+  // Opens the Razorpay checkout popup
+  const initPay = (order) => {
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Ramitra',
+      description: 'Order Payment',
+      order_id: order.id,
+      prefill: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        contact: formData.phone,
+      },
+      handler: async (response) => {
+        try {
+          const { data } = await axios.post(
+            backendUrl + '/api/order/verifyRazorpay',
+            response,
+            { headers: { token } }
+          )
+          if (data.success) {
+            setCartItems({})
+            toast.success('Payment successful')
+            navigate('/orders')
+          } else {
+            toast.error(data.message)
+          }
+        } catch (error) {
+          toast.error(error?.response?.data?.message || 'Payment verification failed')
+        }
+      },
+      modal: {
+        ondismiss: () => toast.info('Payment cancelled'),
+      },
+    }
+
+    const rzp = new window.Razorpay(options)
+    rzp.on('payment.failed', (resp) => {
+      toast.error(resp.error.description || 'Payment failed')
+    })
+    rzp.open()
+  }
+
   const onSubmitHandler = async (event) => {
     event.preventDefault()
+    if (!token) {
+      toast.info('Please sign in before placing an order.')
+      navigate('/login')
+      return
+    }
     setIsSubmitting(true)
     try {
       let orderItems = []
@@ -64,11 +113,26 @@ const PlaceOrder = () => {
           }
           break;
         }
+        case 'razorpay': {
+          if (!import.meta.env.VITE_RAZORPAY_KEY_ID || typeof window.Razorpay !== 'function') {
+            toast.error('Razorpay checkout is not available. Please try again later.')
+            break;
+          }
+          const response = await axios.post(
+            backendUrl + '/api/order/razorpay',
+            orderData,
+            { headers: { token } }
+          )
+          if (response.data.success) {
+            initPay(response.data.order)
+          } else {
+            toast.error(response.data.message)
+          }
+          break;
+        }
         case 'stripe':
-        case 'razorpay':
         case 'upi':
-          // TODO: wire up the actual payment gateway API call for this method.
-          toast.error(`${method.toUpperCase()} payment isn't set up yet — please select Cash on Delivery for now.`)
+          toast.error(`${method.toUpperCase()} payment isn't set up yet. Please select Cash on Delivery or Razorpay.`)
           break;
         default:
           toast.error('Please select a valid payment method.')
@@ -84,9 +148,7 @@ const PlaceOrder = () => {
   }
 
   const paymentOptions = [
-    { key: 'stripe', label: 'Stripe', content: <FaStripe style={{ fontSize: '30px' }} /> },
-    { key: 'razorpay', label: 'Razorpay', content: <img className='w-16 sm:w-20' src={assets.razorPay} alt="Razorpay" /> },
-    { key: 'upi', label: 'UPI', content: <img className='w-16 sm:w-20' src={assets.upiLogo} alt="UPI" /> },
+    { key: 'razorpay', label: 'Razorpay', content: <img className='w-16 sm:w-20' src={assets.razorpay_logo} alt="Razorpay" /> },
     { key: 'cod', label: 'Cash on Delivery', content: <p className='px-1 sm:px-3 text-center text-sm sm:text-base'>CASH ON DELIVERY</p> },
   ]
 

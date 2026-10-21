@@ -22,17 +22,20 @@ const Orders = () => {
         { headers: { token } }
       );
       if (response.data.success) {
-        let allOrdersItem = []
-        response.data.orders.map((order) => {
-          order.items.map((item) => {
-            item['status'] = order.status
-            item['payment'] = order.payment
-            item['paymentMethod'] = order.paymentMethod
-            item['date'] = order.date
-            allOrdersItem.push(item)
-          })
-        })
-        setOrderData(allOrdersItem.reverse())
+        let allOrdersItem = [];
+        response.data.orders.forEach((order) => {
+          // hide abandoned online payments (popup closed / payment not completed)
+          if (order.paymentMethod !== "COD" && !order.payment) return;
+
+          order.items.forEach((item) => {
+            item["status"] = order.status;
+            item["payment"] = order.payment;
+            item["paymentMethod"] = order.paymentMethod;
+            item["date"] = order.date;
+            allOrdersItem.push(item);
+          });
+        });
+        setOrderData(allOrdersItem.reverse());
       }
     } catch (error) {
       toast.error(error.message);
@@ -79,7 +82,10 @@ const Orders = () => {
                     Date: <span className="text-gray-500">{new Date(item.date).toDateString()}</span>
                   </p>
                   <p className="mt-1 text-xs sm:text-sm">
-                    Payment: <span className="text-gray-500">{item.paymentMethod}</span>
+                    Payment:{" "}
+                    <span className="text-gray-500">
+                      {item.paymentMethod} {item.payment ? "(Paid)" : "(Pending)"}
+                    </span>
                   </p>
                 </div>
               </div>

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
-import SearchBar from "./SearchBar";
 
 function Navbar() {
   const [visible, setVisible] = useState(false);
+  const location = useLocation();
 
   const {
     getCartCount,
@@ -13,7 +13,20 @@ function Navbar() {
     token,
     setToken,
     setCartItems,
+    showSearch,
+    setShowSearch,
+    setSearch,
   } = useContext(ShopContext);
+
+  const handleSearchClick = () => {
+    if (!location.pathname.includes("/collection")) {
+      setSearch("");
+      navigate("/collection");
+      setShowSearch(true);
+      return;
+    }
+    setShowSearch(!showSearch);
+  };
 
   const logout = () => {
     navigate("/login");
@@ -62,9 +75,23 @@ function Navbar() {
             </NavLink>
           ))}
         </ul>
-
         {/* Right Section */}
         <div className="flex items-center gap-5 md:gap-6">
+
+          <button
+            type="button"
+            onClick={handleSearchClick}
+            aria-label={showSearch ? "Close search" : "Search products"}
+            aria-expanded={showSearch}
+            className="flex items-center justify-center"
+          >
+            <img
+              className="w-5 cursor-pointer"
+              src={assets.search_icon}
+              alt=""
+              aria-hidden="true"
+            />
+          </button>
 
           {/* Profile Dropdown */}
           <div className="relative group">
